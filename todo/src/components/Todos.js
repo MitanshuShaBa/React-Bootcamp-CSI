@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import TodoItem from "./TodoItem"
 import {db} from "../firebase"
-import { collection, onSnapshot } from "firebase/firestore"
+import { collection, onSnapshot, addDoc } from "firebase/firestore"
+import { Button, Fab } from "@material-ui/core"
+import {AddIcon} from '@material-ui/icons'
 
 const Todos = () => {
     const [todos, setTodos] = useState([])
@@ -20,12 +22,22 @@ const Todos = () => {
             unsubscribe()
         }
     }, [])
+
+    const addTodo = async ()=>{
+        const docRef = await addDoc(collection(db, "todos"), {
+ completed:false,
+ todo:""
+});
+    }
     
     return (
         <div>
             {todos.map((todoItem)=>{
                 return <TodoItem completed={todoItem.completed} todo={todoItem.todo} id={todoItem.id} />
             })}
+            <div className="add-button">
+                <Button onClick={addTodo}>Add Todo</Button>
+            </div>
         </div>
     )
 }

@@ -1,0 +1,25 @@
+.todos {
+  margin-top: 4vh;
+  background-color: white;
+  padding: 1rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  border-bottom: 1px solid rgba(175, 126, 235, 0.2);
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+.add-button {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 1rem 0;
+}
