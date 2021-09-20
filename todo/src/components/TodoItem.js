@@ -27,11 +27,11 @@ const TodoItem = (props) => {
         <div className="root">
             <Checkbox name="completed" checked={props.completed} color='primary' onClick={handleCompleted}/>
             <div className="content">
-                <TextField onChange={handleChangeText} name='todo' value={props.todo} multiline style={{width:'100%'}}/>
-                <IconButton onClick={handleDeleteDocument}>
-                    <DeleteOutline/>
-                </IconButton>
+                <TextField InputProps={{ disableUnderline: true }} onChange={handleChangeText} name='todo' value={props.todo} multiline style={{width:'100%'}}/>
             </div>
+            <IconButton onClick={handleDeleteDocument}>
+                <DeleteOutline/>
+            </IconButton>
         </div>
     )
 }

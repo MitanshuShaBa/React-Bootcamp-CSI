@@ -2,21 +2,22 @@ import { useEffect, useState } from "react"
 import TodoItem from "./TodoItem"
 import {db} from "../firebase"
 import { collection, onSnapshot, addDoc } from "firebase/firestore"
-import { Button, Fab } from "@material-ui/core"
-import {AddIcon} from '@material-ui/icons'
+import { Fab } from "@material-ui/core"
+import AddIcon from '@material-ui/icons/Add';
+import "./Todos.css"
 
 const Todos = () => {
     const [todos, setTodos] = useState([])
 
-    useEffect(async () => {
+    useEffect(() => {
         const todosCol = collection(db,'todos')
-        const unsubscribe = await onSnapshot(todosCol, (querySnapshot) => {
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-            docs.push({...doc.data(), id:doc.id});
-        })
-        setTodos(docs)
-        })
+        const unsubscribe = onSnapshot(todosCol, (querySnapshot) => {
+            const docs = [];
+            querySnapshot.forEach((doc) => {
+                docs.push({...doc.data(), id:doc.id});
+            })
+            setTodos(docs)
+        }, (err) => console.log(err))
           
         return () => {
             unsubscribe()
@@ -24,19 +25,27 @@ const Todos = () => {
     }, [])
 
     const addTodo = async ()=>{
-        const docRef = await addDoc(collection(db, "todos"), {
- completed:false,
- todo:""
-});
+        await addDoc(collection(db, "todos"), {
+            completed:false,
+            todo:""
+        });
     }
     
     return (
-        <div>
-            {todos.map((todoItem)=>{
-                return <TodoItem completed={todoItem.completed} todo={todoItem.todo} id={todoItem.id} />
-            })}
+        <div className="todos">
+            <ul>
+                {todos.map((todoItem)=>{
+                    return (
+                        <li key={todoItem.id}>
+                            <TodoItem completed={todoItem.completed} todo={todoItem.todo} id={todoItem.id} />
+                        </li>
+                    )
+                })}
+            </ul>
             <div className="add-button">
-                <Button onClick={addTodo}>Add Todo</Button>
+                <Fab onClick={addTodo} color="primary">
+                    <AddIcon />
+                </Fab>
             </div>
         </div>
     )
