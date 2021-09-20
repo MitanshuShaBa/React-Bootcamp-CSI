@@ -26,7 +26,7 @@ const TodoItem = (props) => {
     return (
         <div className="root">
             <Checkbox name="completed" checked={props.completed} color='primary' onClick={handleCompleted}/>
-            <div className="content">
+            <div className={`content ${props.completed && "striked"}`}>
                 <TextField InputProps={{ disableUnderline: true }} onChange={handleChangeText} name='todo' value={props.todo} multiline style={{width:'100%'}}/>
             </div>
             <IconButton onClick={handleDeleteDocument}>
